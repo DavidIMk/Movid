@@ -40,7 +40,9 @@ export const fetchMovieList = (
   dispatch: Dispatch,
   getState: () => StoreState,
   ) => {
-    dispatch(setIsLoading(true));
+    if (newSearch) {
+      dispatch(setIsLoading(true));
+    }
     const searchParam = search || DEFAULT_SEARCH;
     const pageParam = page;
     try {
@@ -70,7 +72,9 @@ export const fetchMovieList = (
       onError?.();
       console.error(error);
     } finally {
-      dispatch(setIsLoading(false));
+      if (newSearch) {
+        dispatch(setIsLoading(false));
+      }
     }
   };
 
