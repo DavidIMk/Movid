@@ -9,7 +9,7 @@ interface IMovieBoxProps {
 
 const MovieBox = ({ movie, onMovieClick }: IMovieBoxProps) => {
   return (
-      <DivBoxContainer onClick={onMovieClick}>
+      <DivBoxContainer data-testid="container" onClick={onMovieClick}>
           <DivImage src={movie.Poster} />
           <DivTitle>
               {movie.Title}
