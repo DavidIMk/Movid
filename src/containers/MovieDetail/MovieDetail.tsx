@@ -16,6 +16,7 @@ import { IMovieParam } from "../../interfaces/common";
 import { useHistory, useParams } from "react-router-dom";
 import { fetchMovieByID } from "../../redux/actions/movie";
 import Modal from "./components/Modal";
+import Loading from "../../components/Loading";
 
 const MovieDetail = () => {
   const { imdbID } = useParams<IMovieParam>();
@@ -35,7 +36,7 @@ const MovieDetail = () => {
   }, []);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   if (movieDetail) {

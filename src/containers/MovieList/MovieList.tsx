@@ -11,6 +11,7 @@ import {
 } from "./MovieList.style";
 import MovieBox from "./components/MovieBox";
 import { useHistory } from "react-router-dom";
+import Loading from "../../components/Loading";
 
 const MovieList = () => {
   const dispatch = useDispatch();
@@ -27,7 +28,9 @@ const MovieList = () => {
   const observer = useRef<any>();
   const lastElementRef = useCallback(
     (node) => {
-      if (isLoading) return;
+      if (isLoading) {
+        return <Loading />;
+      }
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && hasMore) {
@@ -66,12 +69,16 @@ const MovieList = () => {
   };
 
   const handleMovieClick = (imdbID: string) => {
-      history.push(`/${imdbID}`)
-  }
+    history.push(`/${imdbID}`);
+  };
 
   useEffect(() => {
     handleSearch();
   }, []);
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <DivMovieListContainer>
@@ -88,12 +95,20 @@ const MovieList = () => {
         <>
           <DivListContainer>
             {movieList.map((movie) => {
-              return <MovieBox onMovieClick={() => handleMovieClick(movie.imdbID)} key={movie.imdbID} movie={movie} />;
+              return (
+                <MovieBox
+                  onMovieClick={() => handleMovieClick(movie.imdbID)}
+                  key={movie.imdbID}
+                  movie={movie}
+                />
+              );
             })}
           </DivListContainer>
           <div ref={lastElementRef} />
         </>
-      ) : errorMsg}
+      ) : (
+        errorMsg
+      )}
     </DivMovieListContainer>
   );
 };
