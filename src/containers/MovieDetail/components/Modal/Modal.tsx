@@ -9,7 +9,7 @@ interface IModalProps {
 
 const Modal = ({ isShowing, onClose, image }: IModalProps) => {
   return (
-    <DivModalContainer isShowing={isShowing} onClick={onClose}>
+    <DivModalContainer data-testid="container" isShowing={isShowing} onClick={onClose}>
       <DivClose onClick={onClose}>&times;</DivClose>
       <ImgModalContent src={image} />
     </DivModalContainer>
